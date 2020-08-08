@@ -64,11 +64,11 @@ class Utils
             $yaw = floatval($split[3]);
             $pitch = floatval($split[4]);
         }
-        return new Vector3(intval($split[0]), intval($split[1]), intval($split[2]));
+        return new Vector3(floatval($split[0]), floatval($split[1]), floatval($split[2]));
     }
 
     public static function vectorToString(string $delimeter, Vector3 $vector, $yaw = 0.0, $pitch = 0.0) : string{
-        $array = [$vector->getX(), $vector->getY(), $vector->getZ()];
+        $array = [(float)$vector->getX(), (float)$vector->getY(), (float)$vector->getZ()];
         if($yaw > 0 && $pitch > 0){
             $array[] = $yaw;
             $array[] = $pitch;

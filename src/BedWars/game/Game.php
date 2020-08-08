@@ -104,7 +104,7 @@ class Game
 		$this->playersPerTeam = $data['playersPerTeam'];
 		$this->worldName = $data['world'];
 		$lobbyVector = explode(":", $data['lobby']);
-		$this->lobby = new Position($lobbyVector[0], $lobbyVector[1], $lobbyVector[2], Server::getInstance()->getLevelByName($data['mapName']));
+		$this->lobby = new Position((float)$lobbyVector[0], (float)$lobbyVector[1], (float)$lobbyVector[2], Server::getInstance()->getLevelByName($data['mapName']));
 		$this->lobbyName = explode(":", $data['lobby'][3]);
 		$this->mapName = $data['mapName'];
 		$this->teamInfo = $data['teamInfo'];
@@ -516,6 +516,7 @@ class Game
 															unset($this->generators[array_search($generatorEntity, $this->generators)]);
 														}
 													}
+													$entity->close();
 												}
 											}
 											$entity->close();
@@ -760,7 +761,7 @@ class Game
 			$delay = $generatorData['refreshRate'];
 
 			$vector = Utils::stringToVector(":", $generator['position']);
-			$position = new Position($vector->x, $vector->y, $vector->z, $this->plugin->getServer()->getLevelByName($this->worldName));
+			$position = new Position((float)$vector->x, (float)$vector->y, (float)$vector->z, $this->plugin->getServer()->getLevelByName($this->worldName));
 
 			$this->generators[] = new Generator($item, $delay, $position, $spawnText, $spawnBlock);
 

@@ -76,13 +76,13 @@ class Generator extends Vector3
 			$text = TextFormat::YELLOW . "Tier " . TextFormat::RED . Utils::rome($this->tier) . "\n" .
 				self::TITLE[$itemID] . "\n\n" .
 				TextFormat::YELLOW . "Spawns in " . TextFormat::RED . $this->dynamicSpawnTime . "seconds";
-			$this->floatingText = new FloatingTextParticle($position->add(0.5, 3, 0.5), $text, "");
+			$this->floatingText = new FloatingTextParticle($position->add(0,2.5,0), $text, "");
 		}
 
 		if ($this->spawnBlock) {
 			$path = Server::getInstance()->getDataPath() . "plugin_data/BedWars/skins/" . $itemID . ".png";
 			$skin = Utils::getSkinFromFile($path);
-			$nbt = Entity::createBaseNBT($position->add(0, 2.3, 0), null);
+			$nbt = Entity::createBaseNBT($position->add(0,2,0), null);
 			$nbt->setString("GeneratorEntity", "true");
 			$nbt->setTag(new CompoundTag('Skin', [
 				new StringTag('Data', $skin->getSkinData()),

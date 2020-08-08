@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="34b3959b-bbda-4a35-8f0a-c3f853f0a717" name="Default Changelist" comment="" />
+    <list default="true" id="34b3959b-bbda-4a35-8f0a-c3f853f0a717" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/game/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/Game.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/game/Generator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/Generator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/utils/Utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/utils/Utils.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +35,9 @@
     <execution>
       <phar pharPath="$PROJECT_DIR$/../../composer.phar" interpreterId="2ac5fa43-c4fb-442f-98b5-8a9866642a62" />
     </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP-PMMP">
     <include_path>
@@ -66,6 +92,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1fj5ivEjXi90e8DYvnbIqRP6atq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -89,23 +116,43 @@
       <workItem from="1596718810010" duration="819000" />
       <workItem from="1596719809504" duration="115000" />
       <workItem from="1596720068852" duration="17299000" />
-      <workItem from="1596757896461" duration="11666000" />
+      <workItem from="1596757896461" duration="11877000" />
+      <workItem from="1596926523344" duration="3381000" />
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="519" y="201" width="318" height="376" key="FileChooserDialogImpl" timestamp="1596718937666">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="519" y="201" width="318" height="376" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1596718937666" />
+    <state x="565" y="303" width="235" height="197" key="Github.ShareDialog" timestamp="1596769674567">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="565" y="303" width="235" height="197" key="Github.ShareDialog/0.30.1366.738@0.30.1366.738" timestamp="1596769674567" />
+    <state x="455" y="127" width="445" height="550" key="Github.UntrackedFilesDialog" timestamp="1596769684681">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="455" y="127" width="445" height="550" key="Github.UntrackedFilesDialog/0.30.1366.738@0.30.1366.738" timestamp="1596769684681" />
     <state x="308" y="18" width="900" height="736" key="SettingsEditor" timestamp="1596719656573">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="308" y="18" width="900" height="736" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1596719656573" />
-    <state x="393" y="168" width="579" height="480" key="find.popup" timestamp="1596766941430">
-      <screen x="0" y="30" width="1366" height="738" />
+    <state x="393" y="144" width="579" height="480" key="find.popup" timestamp="1596929184841">
+      <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="393" y="144" width="579" height="480" key="find.popup/0.0.1366.768@0.0.1366.768" timestamp="1596725672839" />
+    <state x="393" y="144" width="579" height="480" key="find.popup/0.0.1366.768@0.0.1366.768" timestamp="1596929184841" />
     <state x="393" y="168" width="579" height="480" key="find.popup/0.30.1366.738@0.30.1366.738" timestamp="1596766941430" />
   </component>
 </project>
