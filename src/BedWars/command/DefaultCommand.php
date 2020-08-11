@@ -200,13 +200,13 @@ class DefaultCommand extends PluginCommand
 					--$void_y;
 
 					$fileContent = file_get_contents($location);
-					$jsonData = json_decode($fileContent, true);
+					$jsonData = json_decode($fileContent, true, 512, JSON_THROW_ON_ERROR);
 					$positionData = [
 						'lobby' => $sender->getX() . ":" . $sender->getY() . ":" . $sender->getZ(),
 						'void_y' => $void_y
 					];
 
-					file_put_contents($location, json_encode(array_merge($jsonData, $positionData)));
+					file_put_contents($location, json_encode(array_merge($jsonData, $positionData), JSON_THROW_ON_ERROR));
 					$sender->sendMessage(TextFormat::GREEN . "Registered Successfully!");
 					break;
 				case "setmap";
@@ -321,10 +321,6 @@ class DefaultCommand extends PluginCommand
 					$sender->sendMessage(BedWars::PREFIX . TextFormat::YELLOW . "Created new generator " . TextFormat::GREEN . "[game=" . $gameName . " | type=" . $generatorType . "]");
 					break;
 				case "join";
-					if (!$sender instanceof Player) {
-						$sender->sendMessage(TextFormat::RED . "This command can be executed only in game");
-						return;
-					}
 
 					if (!isset($args[1])) {
 						$sender->sendMessage(BedWars::PREFIX . TextFormat::YELLOW . $this->generateSubCommandUsage($args[0]));

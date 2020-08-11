@@ -340,7 +340,7 @@ class GameListener implements Listener
 		if ($game !== null) {
 			$expectedBlocks = [];
 			foreach ($event->getBlockList() as $block) {
-				if (in_array(Utils::vectorToString(":", $block->asVector3()), $game->placedBlocks)) {
+				if (in_array(Utils::vectorToString(":", $block->asVector3()), $game->placedBlocks, true)) {
 					$expectedBlocks[] = $block;
 				}
 			}

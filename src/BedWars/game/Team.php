@@ -78,6 +78,14 @@ class Team
     }
 
     /**
+     * @return int
+     */
+    public function getPlayerCount(): int
+    {
+        return count($this->players) - $this->dead;
+    }
+
+    /**
      * @param bool $state
      */
     public function updateBedState(bool $state) : void{

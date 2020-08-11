@@ -20,10 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34b3959b-bbda-4a35-8f0a-c3f853f0a717" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/BedWars.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/BedWars.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/command/DefaultCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/command/DefaultCommand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BedWars/game/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/Game.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BedWars/game/Generator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/Generator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BedWars/utils/Utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/utils/Utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/game/GameListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/GameListener.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BedWars/game/Team.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BedWars/game/Team.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +51,6 @@
       <path value="$PROJECT_DIR$/../../vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/../../vendor/phpstan/phpstan-phpunit" />
       <path value="$PROJECT_DIR$/../../vendor/phpstan/phpstan-strict-rules" />
-      <path value="$PROJECT_DIR$/../../vendor/phpunit/php-token-stream" />
       <path value="$PROJECT_DIR$/../../vendor/phpunit/php-text-template" />
       <path value="$PROJECT_DIR$/../../vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/../../vendor/phpunit/php-invoker" />
@@ -89,6 +91,9 @@
       <path value="$PROJECT_DIR$/../../vendor/composer" />
       <path value="$PROJECT_DIR$/../../vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/../../vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/../../vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/../../vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/../../vendor/sebastian/lines-of-code" />
     </include_path>
   </component>
   <component name="ProjectId" id="1fj5ivEjXi90e8DYvnbIqRP6atq" />
@@ -100,9 +105,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../src/pocketmine" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -118,8 +125,12 @@
       <workItem from="1596720068852" duration="17299000" />
       <workItem from="1596757896461" duration="11877000" />
       <workItem from="1596926523344" duration="3381000" />
+      <workItem from="1597168847720" duration="4209000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -131,6 +142,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="519" y="201" width="318" height="376" key="FileChooserDialogImpl" timestamp="1596718937666">
@@ -145,9 +157,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="455" y="127" width="445" height="550" key="Github.UntrackedFilesDialog/0.30.1366.738@0.30.1366.738" timestamp="1596769684681" />
-    <state x="308" y="18" width="900" height="736" key="SettingsEditor" timestamp="1596719656573">
-      <screen x="0" y="0" width="1366" height="768" />
+    <state x="308" y="17" width="916" height="708" key="SettingsEditor" timestamp="1597168934121">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
+    <state x="308" y="17" width="916" height="708" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1597168934121" />
     <state x="308" y="18" width="900" height="736" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1596719656573" />
     <state x="393" y="144" width="579" height="480" key="find.popup" timestamp="1596929184841">
       <screen x="0" y="0" width="1366" height="768" />

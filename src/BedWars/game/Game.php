@@ -435,7 +435,7 @@ class Game
 							break;
 					}
 
-					if ($this->startTime == 0) {
+					if ($this->startTime === 0) {
 						$this->start();
 					}
 				} else {
@@ -475,8 +475,8 @@ class Game
 						$player->sendMessage(TextFormat::YELLOW . "You will respawn in " . TextFormat::RED . $this->deadQueue[$player->getRawUniqueId()] . " " . TextFormat::YELLOW . "seconds!");
 						$player->getLevel()->broadcastLevelSoundEvent($player, LevelSoundEventPacket::SOUND_NOTE, $this->deadQueue[$player->getRawUniqueId()]);
 
-						$this->deadQueue[$player->getRawUniqueId()] -= 1;
-						if ($this->deadQueue[$player->getRawUniqueId()] == 0) {
+						--$this->deadQueue[$player->getRawUniqueId()];
+						if ($this->deadQueue[$player->getRawUniqueId()] === 0) {
 							unset($this->deadQueue[$player->getRawUniqueId()]);
 
 							$this->respawnPlayer($player);
@@ -525,16 +525,16 @@ class Game
 								}
 							}
 						}
-						if ($team->hasBed() && count($team->getPlayers()) === $this->playersPerTeam) {
+						if ($team->hasBed()) {
 							$status = TextFormat::GREEN . "[+]";
-						} elseif (!$team->hasBed() && $team->dead < $this->playersPerTeam) {
-							$status = TextFormat::GRAY . "[" . (count($team->getPlayers()) - $team->dead) . "]";
-						} elseif (!$team->hasBed() && count($team->getPlayers()) <= 0) {
+						} elseif (!$team->hasBed() && $team->getPlayerCount() !== 0) {
+							$status = TextFormat::GRAY . "[" . $team->getPlayerCount() . "]";
+						} elseif (!$team->hasBed() && $team->getPlayerCount() <= 0) {
 							$status = TextFormat::RED . "[-]";
 						} else {
 							$status = TextFormat::RED . "[-]";
 						}
-						$isPlayerTeam = $team->getName() == $playerTeam->getName() ? TextFormat::GRAY . "(YOU)" : "";
+						$isPlayerTeam = $team->getName() === $playerTeam->getName() ? TextFormat::GRAY . "(YOU)" : "";
 						$stringFormat = " " . TextFormat::BOLD . $team->getColor() . ucfirst($team->getName()[0]) . " " . TextFormat::RESET . TextFormat::WHITE . ucfirst($team->getName()) . ": " . $status . " " . $isPlayerTeam;
 						Scoreboard::setLine($player, " " . $currentLine, $stringFormat);
 						$currentLine++;
@@ -860,4 +860,12 @@ class Game
 
 
 	}
+
+    /**
+     * @return string
+     */
+    public function getLobbyName(): string
+    {
+        return $this->lobbyName;
+    }
 }

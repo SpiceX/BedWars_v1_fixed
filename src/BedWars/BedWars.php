@@ -22,260 +22,263 @@ use pocketmine\utils\TextFormat;
 class BedWars extends PluginBase
 {
 
-	public const PREFIX = TextFormat::BOLD . TextFormat::DARK_RED . "" . TextFormat::RESET;
-	public const TEAMS = [
-		'blue' => "§1",
-		'red' => "§c",
-		'yellow' => "§e",
-		"green" => "§a",
-		"aqua" => "§b",
-		"gold" => "§6",
-		"white" => "§f"
-	];
-	public const GENERATOR_PRIORITIES = [
-		'gold' => ['item' => Item::GOLD_INGOT, 'spawnText' => false, 'spawnBlock' => false, 'refreshRate' => 13],
-		'iron' => ['item' => Item::IRON_INGOT, 'spawnText' => false, 'spawnBlock' => false, 'refreshRate' => 8],
-		'diamond' => ['item' => Item::DIAMOND, 'spawnText' => true, 'spawnBlock' => true, 'refreshRate' => 30],
-		'emerald' => ['item' => Item::EMERALD, 'spawnText' => true, 'spawnBlock' => true, 'refreshRate' => 60]
-	];
-	public static $instance;
-	/** @var Game[] $games */
-	public $games = array();
-	/** @var array $signs */
-	public $signs = array();
-	/** @var array $bedSetup */
-	public $bedSetup = array();
-	/** @var string $serverWebsite */
-	public $serverWebsite;
-	/** @var int $staticStartTime */
-	public $staticStartTime;
-	/** @var int $staticRestartTime */
-	public $staticRestartTime;
-	public $eliminations = [];
-	public $eliminationsb = [];
+    public const PREFIX = TextFormat::BOLD . TextFormat::DARK_RED . "" . TextFormat::RESET;
+    public const TEAMS = [
+        'blue' => "§1",
+        'red' => "§c",
+        'yellow' => "§e",
+        "green" => "§a",
+        "aqua" => "§b",
+        "gold" => "§6",
+        "white" => "§f"
+    ];
+    public const GENERATOR_PRIORITIES = [
+        'gold' => ['item' => Item::GOLD_INGOT, 'spawnText' => false, 'spawnBlock' => false, 'refreshRate' => 13],
+        'iron' => ['item' => Item::IRON_INGOT, 'spawnText' => false, 'spawnBlock' => false, 'refreshRate' => 8],
+        'diamond' => ['item' => Item::DIAMOND, 'spawnText' => true, 'spawnBlock' => true, 'refreshRate' => 30],
+        'emerald' => ['item' => Item::EMERALD, 'spawnText' => true, 'spawnBlock' => true, 'refreshRate' => 60]
+    ];
+    public static $instance;
+    /** @var Game[] $games */
+    public $games = array();
+    /** @var array $signs */
+    public $signs = array();
+    /** @var array $bedSetup */
+    public $bedSetup = array();
+    /** @var string $serverWebsite */
+    public $serverWebsite;
+    /** @var int $staticStartTime */
+    public $staticStartTime;
+    /** @var int $staticRestartTime */
+    public $staticRestartTime;
+    public $eliminations = [];
+    public $eliminationsb = [];
 
-	public static function getConfigs(string $value)
-	{
-		return new Config(self::getInstance()->getDataFolder() . "{$value}.yml", Config::YAML);
-	}
+    public static function getConfigs(string $value)
+    {
+        return new Config(self::getInstance()->getDataFolder() . "{$value}.yml", Config::YAML);
+    }
 
-	public static function getInstance(): BedWars
-	{
-		return self::$instance;
-	}
+    public static function getInstance(): BedWars
+    {
+        return self::$instance;
+    }
 
-	public function onEnable(): void
-	{
-		self::$instance = $this;
-		$this->saveDefaultConfig();
-		$this->saveResource('kills.yml');
-		$this->saveResource('wins.yml');
-		Entity::registerEntity(TopsEntityfbwkill::class, true);
-		$this->loadEntitys();
-		$this->loadTasks();
-		$this->serverWebsite = $this->getConfig()->get('website');
-		$this->staticStartTime = (int)$this->getConfig()->get('start-time');
-		$this->staticRestartTime = (int)$this->getConfig()->get('restart-time');
-		Entity::registerEntity(FakeItemEntity::class, true);
-		@mkdir($this->getDataFolder() . "arenas");
-		@mkdir($this->getDataFolder() . "skins");
-		$this->saveResource("skins/264.png");
-		$this->saveResource("skins/388.png");
+    public function onEnable(): void
+    {
+        self::$instance = $this;
+        $this->saveDefaultConfig();
+        $this->saveResource('kills.yml');
+        $this->saveResource('wins.yml');
+        Entity::registerEntity(TopsEntityfbwkill::class, true);
+        $this->loadEntitys();
+        $this->loadTasks();
+        $this->serverWebsite = $this->getConfig()->get('website');
+        $this->staticStartTime = (int)$this->getConfig()->get('start-time');
+        $this->staticRestartTime = (int)$this->getConfig()->get('restart-time');
+        Entity::registerEntity(FakeItemEntity::class, true);
+        @mkdir($concurrentDirectory = $this->getDataFolder() . "arenas");
+        @mkdir($concurrentDirectory = $this->getDataFolder() . "skins");
 
-		$this->getScheduler()->scheduleRepeatingTask(
-			new SignUpdater($this), 20
-		);
-		$this->getServer()->getPluginManager()->registerEvents(new GameListener($this), $this);
+        $this->saveResource("skins/264.png");
+        $this->saveResource("skins/388.png");
 
-		foreach (glob($this->getDataFolder() . "arenas/*.json") as $location) {
-			$contents = file_get_contents($location);
-			$jsonData = json_decode(mb_convert_encoding($contents,'UTF-8', mb_detect_encoding($contents)), true);
-			if (!$this->validateGame($jsonData)) {
-				continue;
-			}
+        $this->getScheduler()->scheduleRepeatingTask(
+            new SignUpdater($this), 20
+        );
+        $this->getServer()->getPluginManager()->registerEvents(new GameListener($this), $this);
 
-			if (count($jsonData['signs']) > 0) {
-				$this->signs[$jsonData['name']] = $jsonData['signs'];
-			}
+        foreach (glob($this->getDataFolder() . "arenas/*.json") as $location) {
+            $contents = file_get_contents($location);
+            $jsonData = json_decode(mb_convert_encoding($contents, 'UTF-8', mb_detect_encoding($contents)), true);
+            if (!$this->validateGame($jsonData)) {
+                continue;
+            }
 
-			$this->games[$jsonData['name']] = $game = new Game($this, $jsonData);
+            if (count($jsonData['signs']) > 0) {
+                $this->signs[$jsonData['name']] = $jsonData['signs'];
+            }
 
-			$split = explode(":", $jsonData['lobby']);
+            $this->games[$jsonData['name']] = $game = new Game($this, $jsonData);
 
-			$game->setLobby(new Vector3((int)$split[0], (int)$split[1], (int)$split[2]));
-			$game->setVoidLimit((int)$jsonData['void_y']);
-		}
+            $split = explode(":", $jsonData['lobby']);
 
-		$this->getServer()->getCommandMap()->register("bw", new DefaultCommand($this));
-	}
+            $game->setLobby(new Vector3((int)$split[0], (int)$split[1], (int)$split[2]));
+            $game->setVoidLimit((int)$jsonData['void_y']);
+        }
 
-	public function loadEntitys(): void
-	{
-		$values = [HumanEntityfbw::class, TopsEntityfbw::class];
-		foreach ($values as $entitys) {
-			Entity::registerEntity($entitys, true);
-		}
-		unset ($values);
-	}
+        $this->getServer()->getCommandMap()->register("bw", new DefaultCommand($this));
+    }
 
-	public function loadTasks(): void
-	{
-		$values = [new EntityUpdatefbw()];
-		foreach ($values as $tasks) {
-			$this->getScheduler()->scheduleRepeatingTask($tasks, 10);
-		}
-		unset($values);
-	}
+    public function loadEntitys(): void
+    {
+        $values = [HumanEntityfbw::class, TopsEntityfbw::class];
+        foreach ($values as $entitys) {
+            Entity::registerEntity($entitys, true);
+        }
+        unset ($values);
+    }
 
-	public function validateGame(array $arenaData): bool
-	{
-		$requiredParams = [
-			'name',
-			'minPlayers',
-			'playersPerTeam',
-			'lobby',
-			'world',
-			'teamInfo',
-			'generatorInfo',
-			'lobby',
-			'void_y',
-			'mapName'
-		];
+    public function loadTasks(): void
+    {
+        $values = [new EntityUpdatefbw()];
+        foreach ($values as $tasks) {
+            $this->getScheduler()->scheduleRepeatingTask($tasks, 10);
+        }
+        unset($values);
+    }
 
-		$error = 0;
-		foreach ($requiredParams as $param) {
-			if (!array_key_exists($param, $arenaData)) {
-				$error++;
-			}
-		}
+    public function validateGame(array $arenaData): bool
+    {
+        $requiredParams = [
+            'name',
+            'minPlayers',
+            'playersPerTeam',
+            'lobby',
+            'world',
+            'teamInfo',
+            'generatorInfo',
+            'lobby',
+            'void_y',
+            'mapName'
+        ];
 
-		return (!$error) > 0;
-	}
+        $error = 0;
+        foreach ($requiredParams as $param) {
+            if (!array_key_exists($param, $arenaData)) {
+                $error++;
+            }
+        }
 
-	/**
-	 * @param string $gameName
-	 * @return array|null
-	 */
-	public function getArenaData(string $gameName): ?array
-	{
-		if (!$this->gameExists($gameName)) return null;
+        return (!$error) > 0;
+    }
 
-		$location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
+    /**
+     * @param string $gameName
+     * @return array|null
+     */
+    public function getArenaData(string $gameName): ?array
+    {
+        if (!$this->gameExists($gameName)) return null;
 
-		$file = file_get_contents($location);
-		return json_decode($file, true);
-	}
+        $location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
 
-	public function gameExists(string $gameName): bool
-	{
-		$location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
-		if (!is_file($location)) {
-			return false;
-		}
+        $file = file_get_contents($location);
+        return json_decode($file, true);
+    }
 
-		return true;
-	}
+    public function gameExists(string $gameName): bool
+    {
+        $location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
+        if (!is_file($location)) {
+            return false;
+        }
 
-	public function addElimination(Player $player): void
-	{
-		if (isset($this->eliminations[$player->getName()])) {
-			$this->eliminations[$player->getName()] = $this->eliminations[$player->getName()] + 1;
-		}
-	}
+        return true;
+    }
 
-	public function getEliminations(Player $player): int
-	{
-		if (isset($this->eliminations[$player->getName()])) {
-			return $this->eliminations[$player->getName()];
-		} else {
-			return $this->eliminations[$player->getName()] = 0;
-		}
-	}
+    public function addElimination(Player $player): void
+    {
+        if (isset($this->eliminations[$player->getName()])) {
+            $this->eliminations[$player->getName()] = $this->eliminations[$player->getName()] + 1;
+        }
+    }
 
-	public function addEliminationb(Player $player): void
-	{
-		if (isset($this->eliminationsb[$player->getName()])) {
-			$this->eliminationsb[$player->getName()] = $this->eliminationsb[$player->getName()] + 1;
-		}
-	}
+    public function getEliminations(Player $player): int
+    {
+        if (isset($this->eliminations[$player->getName()])) {
+            return $this->eliminations[$player->getName()];
+        } else {
+            return $this->eliminations[$player->getName()] = 0;
+        }
+    }
 
-	public function getEliminationsb(Player $player): int
-	{
-		if (isset($this->eliminationsb[$player->getName()])) {
-			return $this->eliminationsb[$player->getName()];
-		} else {
-			return $this->eliminationsb[$player->getName()] = 0;
-		}
-	}
+    public function addEliminationb(Player $player): void
+    {
+        if (isset($this->eliminationsb[$player->getName()])) {
+            $this->eliminationsb[$player->getName()] = $this->eliminationsb[$player->getName()] + 1;
+        }
+    }
 
-	public function writeArenaData(string $gameName, array $gameData): void
-	{
-		$location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
+    public function getEliminationsb(Player $player): int
+    {
+        if (isset($this->eliminationsb[$player->getName()])) {
+            return $this->eliminationsb[$player->getName()];
+        } else {
+            return $this->eliminationsb[$player->getName()] = 0;
+        }
+    }
 
-		file_put_contents($location, json_encode($gameData));
-	}
+    public function writeArenaData(string $gameName, array $gameData): void
+    {
+        $location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
 
-	public function isGameLoaded(string $gameName): bool
-	{
-		return isset($this->games[$gameName]);
-	}
+        file_put_contents($location, json_encode($gameData));
+    }
 
-	public function objectToArray($d): object
-	{
-		if (is_array($d)) {
-			return (object)array_map(__FUNCTION__, $d);
-		}
+    public function isGameLoaded(string $gameName): bool
+    {
+        return isset($this->games[$gameName]);
+    }
 
-		return $d;
-	}
+    public function objectToArray($d): object
+    {
+        if (is_array($d)) {
+            return (object)array_map(__FUNCTION__, $d);
+        }
 
-	public function loadArena(string $gameName)
-	{
-		$location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
-		if (!is_file($location)) {
-			return "Game doesn't exist";
-		}
+        return $d;
+    }
+
+    public function loadArena(string $gameName)
+    {
+        $location = $this->getDataFolder() . "arenas/" . $gameName . ".json";
+        if (!is_file($location)) {
+            return "Game doesn't exist";
+        }
 
 
-		$file = file_get_contents($location);
-		$jsonData = json_decode($file, true);
-		if (!$this->validateGame($jsonData)) {
-			return "Failed to validate arena";
-		}
-		$this->games[$jsonData['name']] = $game = new Game($this, $jsonData);
-		return null;
-	}
+        $file = file_get_contents($location);
+        $jsonData = json_decode($file, true);
+        if (!$this->validateGame($jsonData)) {
+            return "Failed to validate arena";
+        }
+        $this->games[$jsonData['name']] = $game = new Game($this, $jsonData);
+        return null;
+    }
 
-	public function getPlayerTeam(Player $player): ?Team
-	{
-		$game = $this->getPlayerGame($player);
-		if ($game == null) return null;
+    public function getPlayerTeam(Player $player): ?Team
+    {
+        $game = $this->getPlayerGame($player);
+        if ($game === null) {
+            return null;
+        }
 
-		foreach ($game->teams as $team) {
-			if (in_array($player->getRawUniqueId(), array_keys($team->getPlayers()))) {
-				return $team;
-			}
-		}
-		return null;
-	}
+        foreach ($game->teams as $team) {
+            if (array_key_exists($player->getRawUniqueId(), $team->getPlayers())) {
+                return $team;
+            }
+        }
+        return null;
+    }
 
-	public function getPlayerGame(Player $player, bool $isSpectator = false): ?Game
-	{
-		$isSpectator = false;
-		foreach ($this->games as $game) {
-			if (isset($game->players[$player->getRawUniqueId()])) return $game;
-			if (isset($game->spectators[$player->getRawUniqueId()])) return $game;
-		}
-		return null;
-	}
+    public function getPlayerGame(Player $player, bool $isSpectator = false): ?Game
+    {
+        $isSpectator = false;
+        foreach ($this->games as $game) {
+            if (isset($game->players[$player->getRawUniqueId()])) return $game;
+            if (isset($game->spectators[$player->getRawUniqueId()])) return $game;
+        }
+        return null;
+    }
 
-	public function getGameByMap(string $arenaName): ?Game
-	{
-		foreach ($this->games as $game) {
-			if ($game->getMapName() === $arenaName){
-				return $game;
-			}
-		}
-		return null;
-	}
+    public function getGameByMap(string $arenaName): ?Game
+    {
+        foreach ($this->games as $game) {
+            if ($game->getMapName() === $arenaName) {
+                return $game;
+            }
+        }
+        return null;
+    }
 }
